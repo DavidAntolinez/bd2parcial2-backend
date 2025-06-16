@@ -1,0 +1,39 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientesModule } from './clientes/clientes.module';
+import { MesasModule } from './mesas/mesas.module';
+import { PedidosModule } from './pedidos/pedidos.module';
+import { PlatosModule } from './platos/platos.module';
+import { ReservasModule } from './reservas/reservas.module';
+import * as dotenv from 'dotenv';
+
+// Cargar variables de entorno desde el archivo .env
+dotenv.config();
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      // Usar connection pooler (puerto 6543) en lugar de conexión directa
+      url: `postgresql://postgres:${process.env.SUPABASE_PASSWORD}@db.mezzxooeleitftmbjltx.supabase.co:6543/postgres?pgbouncer=true`,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: process.env.NODE_ENV !== 'production',
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      extra: {
+        // Configuraciones de conexión optimizadas para pooler
+        max: 10, // Máximo de conexiones
+        connectionTimeoutMillis: 30000,
+        idleTimeoutMillis: 10000,
+      },
+      // Debug adicional
+      logging: false,
+    }),
+    ClientesModule,
+    MesasModule,
+    PedidosModule,
+    PlatosModule,
+    ReservasModule,
+  ],
+})
+export class DataBaseSqlModule {} 
