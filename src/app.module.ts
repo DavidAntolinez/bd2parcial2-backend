@@ -6,9 +6,10 @@ import { DataBaseNoSqlModule } from './dataBaseNoSql/dataBaseNoSql.module';
 import { GestionReservasModule } from './gestion-reservas/gestion-reservas.module';
 import { GestionPlatosModule } from './gestion-platos/gestion-platos.module';
 import { GestionPedidosModule } from './gestion-pedidos/gestion-pedidos.module';
+import { GestionReseñasModule } from './gestion-reseñas/gestion-reseñas.module';
 
 @Module({
-  imports: [DataBaseSqlModule, DataBaseNoSqlModule, GestionReservasModule, GestionPlatosModule, GestionPedidosModule],
+  imports: [DataBaseSqlModule, DataBaseNoSqlModule, GestionReservasModule, GestionPlatosModule, GestionPedidosModule, GestionReseñasModule],
   controllers: [AppController],
   providers: [AppService],
 })
