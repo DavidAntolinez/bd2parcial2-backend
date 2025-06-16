@@ -1,4 +1,6 @@
-import { IsNotEmpty, IsNumber, IsDateString, Min } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsDateString, Min, IsArray, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreatePedidoPlatoDto } from './create-pedido-plato.dto';
 
 export class CreatePedidoDto {
   @IsNotEmpty()
@@ -13,4 +15,9 @@ export class CreatePedidoDto {
   @IsNotEmpty()
   @IsNumber()
   clienteId: number;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreatePedidoPlatoDto)
+  platos: CreatePedidoPlatoDto[];
 } 

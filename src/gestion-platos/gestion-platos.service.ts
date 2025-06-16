@@ -24,7 +24,7 @@ export class GestionPlatosService {
 
         const platoExistente = await this.platosService.findByNombre(plato.nombre);
         if(platoExistente[0].id !== id) {
-            throw new BadRequestException('El plato ya existe');
+            throw new BadRequestException('El nombre del plato ya existe');
         }
 
         return this.platosService.update(id, plato);

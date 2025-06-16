@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { PedidoPlato } from '../../pedidos/entities/pedido-plato.entity';
 
 @Entity('Platos')
 export class Plato {
@@ -16,4 +17,7 @@ export class Plato {
 
   @Column({ default: true })
   disponible: boolean;
+
+  @OneToMany(() => PedidoPlato, pedidoPlato => pedidoPlato.plato)
+  pedidoPlatos: PedidoPlato[];
 } 
