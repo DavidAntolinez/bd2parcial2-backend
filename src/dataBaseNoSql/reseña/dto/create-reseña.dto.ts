@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsDateString, IsArray, ValidateNested, IsOptional, Min, Max, IsInt } from 'class-validator';
+import { IsString, IsNumber, IsDateString, IsArray, ValidateNested, Min, Max, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PlatoDto {

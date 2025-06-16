@@ -8,8 +8,7 @@ export type RecomendacionesDocument = Recomendaciones & Document;
   collection: 'Recomendaciones',
 })
 export class Recomendaciones {
-  @Prop({ required: true, unique: true })
-  id: string;
+ 
 }
 
 export const RecomendacionesSchema = SchemaFactory.createForClass(Recomendaciones); 

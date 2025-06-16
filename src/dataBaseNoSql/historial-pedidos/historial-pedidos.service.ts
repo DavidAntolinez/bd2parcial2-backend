@@ -19,33 +19,33 @@ export class HistorialPedidosService {
     return await this.historialPedidosModel.find().exec();
   }
 
-  async findOne(id: string): Promise<HistorialPedidos> {
-    const historial = await this.historialPedidosModel.findOne({ id }).exec();
+  async findById(_id: string): Promise<HistorialPedidos> {
+    const historial = await this.historialPedidosModel.findOne({ _id }).exec();
     
     if (!historial) {
-      throw new NotFoundException(`Historial de pedidos con ID ${id} no encontrado`);
+      throw new NotFoundException(`Historial de pedidos con ID ${_id} no encontrado`);
     }
     
     return historial;
   }
 
-  async update(id: string, updateData: Partial<HistorialPedidos>): Promise<HistorialPedidos> {
+  async update(_id: string, updateData: Partial<HistorialPedidos>): Promise<HistorialPedidos> {
     const historialActualizado = await this.historialPedidosModel
-      .findOneAndUpdate({ id }, updateData, { new: true })
+      .findOneAndUpdate({ _id }, updateData, { new: true })
       .exec();
     
     if (!historialActualizado) {
-      throw new NotFoundException(`Historial de pedidos con ID ${id} no encontrado`);
+      throw new NotFoundException(`Historial de pedidos con ID ${_id} no encontrado`);
     }
     
     return historialActualizado;
   }
 
-  async remove(id: string): Promise<void> {
-    const resultado = await this.historialPedidosModel.deleteOne({ id }).exec();
+  async remove(_id: string): Promise<void> {
+    const resultado = await this.historialPedidosModel.deleteOne({ _id }).exec();
     
     if (resultado.deletedCount === 0) {
-      throw new NotFoundException(`Historial de pedidos con ID ${id} no encontrado`);
+      throw new NotFoundException(`Historial de pedidos con ID ${_id} no encontrado`);
     }
   }
 } 

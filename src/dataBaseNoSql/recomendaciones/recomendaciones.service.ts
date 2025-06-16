@@ -10,8 +10,8 @@ export class RecomendacionesService {
     private recomendacionesModel: Model<RecomendacionesDocument>,
   ) {}
 
-  async create(id: string): Promise<Recomendaciones> {
-    const nuevaRecomendacion = new this.recomendacionesModel({ id });
+    async create(_id: string): Promise<Recomendaciones> {
+    const nuevaRecomendacion = new this.recomendacionesModel({ _id });
     return await nuevaRecomendacion.save();
   }
 
@@ -19,33 +19,33 @@ export class RecomendacionesService {
     return await this.recomendacionesModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Recomendaciones> {
-    const recomendacion = await this.recomendacionesModel.findOne({ id }).exec();
+  async findById(_id: string): Promise<Recomendaciones> {
+    const recomendacion = await this.recomendacionesModel.findOne({ _id }).exec();
     
     if (!recomendacion) {
-      throw new NotFoundException(`Recomendación con ID ${id} no encontrada`);
+      throw new NotFoundException(`Recomendación con ID ${_id} no encontrada`);
     }
     
     return recomendacion;
   }
 
-  async update(id: string, updateData: Partial<Recomendaciones>): Promise<Recomendaciones> {
+  async update(_id: string, updateData: Partial<Recomendaciones>): Promise<Recomendaciones> {
     const recomendacionActualizada = await this.recomendacionesModel
-      .findOneAndUpdate({ id }, updateData, { new: true })
+      .findOneAndUpdate({ _id }, updateData, { new: true })
       .exec();
     
     if (!recomendacionActualizada) {
-      throw new NotFoundException(`Recomendación con ID ${id} no encontrada`);
+      throw new NotFoundException(`Recomendación con ID ${_id} no encontrada`);
     }
     
     return recomendacionActualizada;
   }
 
-  async remove(id: string): Promise<void> {
-    const resultado = await this.recomendacionesModel.deleteOne({ id }).exec();
+  async remove(_id: string): Promise<void> {
+    const resultado = await this.recomendacionesModel.deleteOne({ _id }).exec();
     
     if (resultado.deletedCount === 0) {
-      throw new NotFoundException(`Recomendación con ID ${id} no encontrada`);
+      throw new NotFoundException(`Recomendación con ID ${_id} no encontrada`);
     }
   }
 } 

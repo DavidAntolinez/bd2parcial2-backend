@@ -8,8 +8,7 @@ export type HistorialPedidosDocument = HistorialPedidos & Document;
   collection: 'HistorialPedidos',
 })
 export class HistorialPedidos {
-  @Prop({ required: true, unique: true })
-  id: string;
+ 
 }
 
 export const HistorialPedidosSchema = SchemaFactory.createForClass(HistorialPedidos); 

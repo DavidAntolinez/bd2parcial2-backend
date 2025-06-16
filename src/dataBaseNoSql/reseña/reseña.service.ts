@@ -21,7 +21,7 @@ export class ReseñaService {
       fecha: new Date(createReseñaDto.fecha),
     };
     
-    // Verificar que los platos existen
+    // Verificar que los platos existen y que los nombres coinciden
     for (const platoInfo of createReseñaDto.platos) {
       const plato = await this.platosService.findOne(platoInfo.platoId);
       if (!plato ) {
