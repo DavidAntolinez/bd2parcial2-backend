@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Cliente } from '../../clientes/entities/cliente.entity';
+import { Mesa } from '../../mesas/entities/mesa.entity';
 
 @Entity('Reservas')
 export class Reserva {
@@ -14,4 +15,7 @@ export class Reserva {
 
   @ManyToOne(() => Cliente, cliente => cliente.reservas)
   cliente: Cliente;
+
+  @ManyToOne(() => Mesa, mesa => mesa.reservas)
+  mesa: Mesa;
 } 

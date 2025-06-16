@@ -5,6 +5,7 @@ import { Reserva } from './entities/reserva.entity';
 import { CreateReservaDto } from './dto/create-reserva.dto';
 import { UpdateReservaDto } from './dto/update-reserva.dto';
 import { ClientesService } from '../clientes/clientes.service';
+import { MesasService } from '../mesas/mesas.service';
 
 @Injectable()
 export class ReservasService {
@@ -12,17 +13,20 @@ export class ReservasService {
     @InjectRepository(Reserva)
     private reservasRepository: Repository<Reserva>,
     private clientesService: ClientesService,
+    private mesasService: MesasService,
   ) {}
 
   async create(createReservaDto: CreateReservaDto): Promise<Reserva> {
-    const { clienteId, ...reservaData } = createReservaDto;
+    const { clienteId, mesaId, ...reservaData } = createReservaDto;
 
-    // Verificar que el cliente existe
+    // Verificar que cliente y mesa existen
     const cliente = await this.clientesService.findOne(clienteId);
+    const mesa = await this.mesasService.findOne(mesaId);
 
     const reserva = this.reservasRepository.create({
       ...reservaData,
       cliente,
+      mesa,
     });
 
     return await this.reservasRepository.save(reserva);
@@ -30,14 +34,14 @@ export class ReservasService {
 
   async findAll(): Promise<Reserva[]> {
     return await this.reservasRepository.find({
-      relations: ['cliente'],
+      relations: ['cliente', 'mesa'],
     });
   }
 
   async findOne(id: number): Promise<Reserva> {
     const reserva = await this.reservasRepository.findOne({
       where: { id },
-      relations: ['cliente'],
+      relations: ['cliente', 'mesa'],
     });
 
     if (!reserva) {
@@ -48,7 +52,7 @@ export class ReservasService {
   }
 
   async update(id: number, updateReservaDto: UpdateReservaDto): Promise<Reserva> {
-    const { clienteId, ...reservaData } = updateReservaDto;
+    const { clienteId, mesaId, ...reservaData } = updateReservaDto;
     const reserva = await this.findOne(id);
 
     // Actualizar datos básicos
@@ -58,6 +62,12 @@ export class ReservasService {
     if (clienteId) {
       const cliente = await this.clientesService.findOne(clienteId);
       reserva.cliente = cliente;
+    }
+
+    // Actualizar mesa si se proporciona
+    if (mesaId) {
+      const mesa = await this.mesasService.findOne(mesaId);
+      reserva.mesa = mesa;
     }
 
     return await this.reservasRepository.save(reserva);
@@ -71,21 +81,28 @@ export class ReservasService {
   async findByCliente(clienteId: number): Promise<Reserva[]> {
     return await this.reservasRepository.find({
       where: { cliente: { id: clienteId } },
-      relations: ['cliente'],
+      relations: ['cliente', 'mesa'],
+    });
+  }
+
+  async findByMesa(mesaId: number): Promise<Reserva[]> {
+    return await this.reservasRepository.find({
+      where: { mesa: { id: mesaId } },
+      relations: ['cliente', 'mesa'],
     });
   }
 
   async findByFecha(fecha: Date): Promise<Reserva[]> {
     return await this.reservasRepository.find({
       where: { fecha },
-      relations: ['cliente'],
+      relations: ['cliente', 'mesa'],
     });
   }
 
   async findByHora(hora: string): Promise<Reserva[]> {
     return await this.reservasRepository.find({
       where: { hora },
-      relations: ['cliente'],
+      relations: ['cliente', 'mesa'],
     });
   }
 } 

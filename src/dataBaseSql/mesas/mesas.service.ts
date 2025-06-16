@@ -18,12 +18,15 @@ export class MesasService {
   }
 
   async findAll(): Promise<Mesa[]> {
-    return await this.mesasRepository.find();
+    return await this.mesasRepository.find({
+      relations: ['reservas'],
+    });
   }
 
   async findOne(id: number): Promise<Mesa> {
     const mesa = await this.mesasRepository.findOne({
       where: { id },
+      relations: ['reservas'],
     });
 
     if (!mesa) {
@@ -48,12 +51,14 @@ export class MesasService {
   async findByCapacidad(capacidad: number): Promise<Mesa[]> {
     return await this.mesasRepository.find({
       where: { capacidad },
+      relations: ['reservas'],
     });
   }
 
   async findByUbicacion(ubicacion: string): Promise<Mesa[]> {
     return await this.mesasRepository.find({
       where: { ubicacion },
+      relations: ['reservas'],
     });
   }
 } 
