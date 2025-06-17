@@ -183,4 +183,15 @@ export class PedidosService {
       relations: ['cliente', 'pedidoPlatos', 'pedidoPlatos.plato'],
     });
   }
+
+  async findPedidoPlatos(pedidoId: number): Promise<PedidoPlato[]> {
+    const pedidoPlatos = await this.pedidoPlatosRepository.find({
+      where: { pedido: { id: pedidoId } },
+      relations: ['plato'],
+    });
+    if (pedidoPlatos.length === 0) {
+      throw new NotFoundException(`Pedido con ID ${pedidoId} no encontrado`);
+    }
+    return pedidoPlatos;
+  }
 } 

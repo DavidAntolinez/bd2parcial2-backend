@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber, IsDateString, Matches } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsDateString, Matches, Min } from 'class-validator';
 
 export class CreateReservaDto {
   @IsNotEmpty()
@@ -19,4 +19,5 @@ export class CreateReservaDto {
   @IsNotEmpty()
   @IsNumber()
   mesaId: number;
+
 } 

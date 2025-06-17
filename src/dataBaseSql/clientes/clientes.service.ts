@@ -54,4 +54,17 @@ export class ClientesService {
       relations: ['pedidos', 'reservas'],
     });
   }
+
+  async findByNombre(nombre: string): Promise<Cliente> {
+    const cliente = await this.clientesRepository.findOne({
+      where: { nombre },
+      relations: ['pedidos', 'reservas'],
+    });
+
+    if (!cliente) {
+      throw new NotFoundException(`Cliente con nombre ${nombre} no encontrado`);
+    }
+
+    return cliente;
+  }
 } 

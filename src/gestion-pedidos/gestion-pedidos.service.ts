@@ -17,5 +17,12 @@ export class GestionPedidosService {
     async obtenerPedidosPorFecha(fecha: string) {
         return this.pedidosService.findByFecha(fecha);
     }
-    
+
+    async obtenerPedidos() {
+        return this.pedidosService.findAll();
+    }
+        
+    async obtenerPedidoPlatos(pedidoId: number) {
+        return this.pedidosService.findPedidoPlatos(pedidoId);
+    }
 }

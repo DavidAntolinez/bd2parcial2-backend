@@ -2,11 +2,14 @@ import { BadRequestException, ImATeapotException, Injectable, InternalServerErro
 import { ReservasService } from 'src/dataBaseSql/reservas/reservas.service';
 import { CreateReservaDto } from 'src/dataBaseSql/reservas/dto/create-reserva.dto';
 import { Reserva } from 'src/dataBaseSql/reservas/entities/reserva.entity';
+import { MesasService } from 'src/dataBaseSql/mesas/mesas.service';
+import { Mesa } from 'src/dataBaseSql/mesas/entities/mesa.entity';
 
 @Injectable()
 export class GestionReservasService {
     constructor(
-        private readonly reservasService: ReservasService
+        private readonly reservasService: ReservasService,
+        private readonly mesasService: MesasService
     ) { }
 
     async obtenerReservas() {
@@ -24,14 +27,15 @@ export class GestionReservasService {
             throw new BadRequestException('Todos los campos son requeridos: clienteId, mesaId, fecha, hora');
         }
 
-        // Verificar disponibilidad
-        const reservasConflicto = await this.verificarDisponibilidad(reserva);
+        // // Verificar disponibilidad
+        // const reservasConflicto = await this.verificarDisponibilidad(reserva);
         
-        if (reservasConflicto.length > 0) {
-            throw new ImATeapotException(
-                `No se puede crear la reserva. Ya existe una reserva para la mesa ${reserva.mesaId} el ${reserva.fecha} a las ${reserva.hora}`
-            );
-        }
+        // if (reservasConflicto.length > 0) {
+        //     throw new ImATeapotException(
+        //         `No se puede crear la reserva. Ya existe una reserva para la mesa ${reserva.mesaId} el ${reserva.fecha} a las ${reserva.hora}`
+        //     );
+        // }
+        
 
         return this.reservasService.create(reserva);
     }
@@ -55,10 +59,10 @@ export class GestionReservasService {
      * @param reserva Datos de la nueva reserva
      * @returns Array de reservas que tienen conflicto (misma fecha, mesa y hora)
      */
-    async verificarDisponibilidad(reserva: CreateReservaDto): Promise<Reserva[]> {
-        const reservasFecha = await this.reservasService.findByFecha(reserva.fecha);
-        const reservasMesa = await this.reservasService.findByMesa(reserva.mesaId);
-        const reservasHora = await this.reservasService.findByHora(reserva.hora);
+    async verificarDisponibilidad(fecha: Date, mesaId: number, hora: string): Promise<Reserva[]> {
+        const reservasFecha = await this.reservasService.findByFecha(fecha);
+        const reservasMesa = await this.reservasService.findByMesa(mesaId);
+        const reservasHora = await this.reservasService.findByHora(hora);
 
         // Encontrar reservas que coincidan en los 3 criterios (fecha, mesa y hora)
         return this.encontrarInterseccionTresArrays(reservasFecha, reservasMesa, reservasHora);
@@ -70,6 +74,23 @@ export class GestionReservasService {
 
     async buscarReservasPorFecha(fecha: Date) {
         return this.reservasService.findByFecha(fecha);
+    }
+
+    async buscarMesasDisponibles(fecha: Date, hora: string, personas: number) {
+        const mesas = await this.mesasService.findAll();
+        
+        let mesasDisponibles: Mesa[] = [];
+        
+        for (const mesa of mesas) {
+            const reservasConflicto = await this.verificarDisponibilidad(fecha, mesa.id, hora);
+            if (reservasConflicto.length === 0 && mesa.capacidad >= personas) {
+                // console.log(mesa);
+                mesasDisponibles.push(mesa);
+            }
+        }
+        
+        console.log('Mesas disponibles:', mesasDisponibles);
+        return mesasDisponibles;
     }
     
 }

@@ -4,7 +4,7 @@ import { CreatePlatoDto } from 'src/dataBaseSql/platos/dto/create-plato.dto';
 
 @Injectable()
 export class GestionPlatosService {
-    constructor(private readonly platosService: PlatosService) {}
+    constructor(private readonly platosService: PlatosService) { }
 
     async obtenerPlatos() {
         return this.platosService.findAll();
@@ -13,7 +13,7 @@ export class GestionPlatosService {
     async crearPlato(plato: CreatePlatoDto) {
 
         const platoExistente = await this.platosService.findByNombre(plato.nombre);
-        if(platoExistente.length > 0) {
+        if (platoExistente.length > 0) {
             throw new BadRequestException('El plato ya existe');
         }
 
@@ -23,9 +23,12 @@ export class GestionPlatosService {
     async actualizarPlato(id: number, plato: CreatePlatoDto) {
 
         const platoExistente = await this.platosService.findByNombre(plato.nombre);
-        if(platoExistente[0].id !== id) {
-            throw new BadRequestException('El nombre del plato ya existe');
+        if (platoExistente.length > 0) {
+            if (platoExistente[0].id !== id) {
+                throw new BadRequestException('El nombre del plato ya existe');
+            }
         }
+
 
         return this.platosService.update(id, plato);
     }
@@ -41,5 +44,5 @@ export class GestionPlatosService {
     async buscarPlatosDisponibles() {
         return this.platosService.findDisponibles();
     }
-    
+
 }

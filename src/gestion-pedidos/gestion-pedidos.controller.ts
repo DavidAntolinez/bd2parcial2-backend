@@ -6,6 +6,12 @@ import { CreatePedidoDto } from 'src/dataBaseSql/pedidos/dto/create-pedido.dto';
 export class GestionPedidosController {
   constructor(private readonly gestionPedidosService: GestionPedidosService) {}
 
+
+  @Get()
+  async obtenerPedidos() {
+    return this.gestionPedidosService.obtenerPedidos();
+  }
+
   @Post()
   async crearPedido(@Body() pedido: CreatePedidoDto) {
     return this.gestionPedidosService.crearPedido(pedido);
@@ -20,4 +26,11 @@ export class GestionPedidosController {
   async obtenerPedidosPorFecha(@Param('fecha') fecha: string) {
     return this.gestionPedidosService.obtenerPedidosPorFecha(fecha);
   }
+
+  @Get('/platos/:pedidoId')
+  async obtenerPedidoPlatos(@Param('pedidoId') pedidoId: number) {
+    return this.gestionPedidosService.obtenerPedidoPlatos(pedidoId);
+  }
+
+
 }

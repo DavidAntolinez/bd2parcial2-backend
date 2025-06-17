@@ -10,9 +10,10 @@ import { GestionReseñasModule } from './gestion-reseñas/gestion-reseñas.modul
 import { GestionPreferenciasModule } from './gestion-preferencias/gestion-preferencias.module';
 import { GestionRecomendacionesModule } from './gestion-recomendaciones/gestion-recomendaciones.module';
 import { GestionHistorialPedidosModule } from './gestion-historial-pedidos/gestion-historial-pedidos.module';
+import { GestionClientesModule } from './gestion-clientes/gestion-clientes.module';
 
 @Module({
-  imports: [DataBaseSqlModule, DataBaseNoSqlModule, GestionReservasModule, GestionPlatosModule, GestionPedidosModule, GestionReseñasModule, GestionPreferenciasModule, GestionRecomendacionesModule, GestionHistorialPedidosModule],
+  imports: [DataBaseSqlModule, DataBaseNoSqlModule, GestionReservasModule, GestionPlatosModule, GestionPedidosModule, GestionReseñasModule, GestionPreferenciasModule, GestionRecomendacionesModule, GestionHistorialPedidosModule, GestionClientesModule],
   controllers: [AppController],
   providers: [AppService],
 })

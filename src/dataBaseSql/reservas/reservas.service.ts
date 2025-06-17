@@ -6,6 +6,7 @@ import { CreateReservaDto } from './dto/create-reserva.dto';
 import { UpdateReservaDto } from './dto/update-reserva.dto';
 import { ClientesService } from '../clientes/clientes.service';
 import { MesasService } from '../mesas/mesas.service';
+import { Mesa } from '../mesas/entities/mesa.entity';
 
 @Injectable()
 export class ReservasService {

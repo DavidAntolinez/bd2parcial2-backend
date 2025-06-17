@@ -25,4 +25,9 @@ export class GestionReservasController {
   async buscarReservasPorFecha(@Param('fecha') fecha: Date) {
     return this.gestionReservasService.buscarReservasPorFecha(fecha);
   }
+
+  @Get("/mesas-disponibles/:fecha/:hora/:personas")
+  async buscarMesasDisponibles(@Param('fecha') fecha: Date, @Param('hora') hora: string, @Param('personas') personas: number) {
+    return this.gestionReservasService.buscarMesasDisponibles(fecha, hora, personas);
+  }
 }
