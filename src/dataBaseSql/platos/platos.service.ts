@@ -69,7 +69,4 @@ export class PlatosService {
     });
   }
 
-  async findByIds(ids: number[]): Promise<Plato[]> {
-    return await this.platosRepository.findByIds(ids);
-  }
 } 

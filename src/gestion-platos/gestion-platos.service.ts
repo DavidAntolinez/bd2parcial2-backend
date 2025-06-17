@@ -29,4 +29,17 @@ export class GestionPlatosService {
 
         return this.platosService.update(id, plato);
     }
+
+    async buscarPlatoPorNombre(nombre: string) {
+        return this.platosService.findByNombre(nombre);
+    }
+
+    async buscarPlatosPorCategoria(categoria: string) {
+        return this.platosService.findByCategoria(categoria);
+    }
+
+    async buscarPlatosDisponibles() {
+        return this.platosService.findDisponibles();
+    }
+    
 }

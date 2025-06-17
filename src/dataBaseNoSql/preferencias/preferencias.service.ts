@@ -29,15 +29,6 @@ export class PreferenciasService {
       throw new NotFoundException(`Cliente con ID ${createPreferenciasDto.clienteId} no encontrado`);
     }
 
-    // // Verificar que las intolerancias no se repitan
-    // if (createPreferenciasDto.intolerancias && createPreferenciasDto.intolerancias.length > 0) {
-    //   for (const intolerancia of createPreferenciasDto.intolerancias) {
-    //     if (createPreferenciasDto.intolerancias.includes(intolerancia)) {
-    //       throw new BadRequestException(`La intolerancia ${intolerancia} ya existe`);
-    //     }
-    //   }
-    // }
-
     // Verificar que los platos existen y que los nombres coinciden
     if (createPreferenciasDto.platosFavoritos && createPreferenciasDto.platosFavoritos.length > 0) {
       for (const platoInfo of createPreferenciasDto.platosFavoritos) {

@@ -18,4 +18,16 @@ export class CreatePlatoDto {
 
   @IsBoolean()
   disponible: boolean;
+
+  @IsBoolean()
+  esVegano: boolean;
+
+  @IsBoolean()
+  tieneGluten: boolean;
+
+  @IsBoolean()
+  esVegetariano: boolean;
+
+  @IsBoolean()
+  tieneLactosa: boolean;
 } 

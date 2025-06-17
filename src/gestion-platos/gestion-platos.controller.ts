@@ -21,4 +21,19 @@ export class GestionPlatosController {
   async actualizarPlato(@Param('id') id: number, @Body() plato: CreatePlatoDto) {
     return this.gestionPlatosService.actualizarPlato(id, plato);
   }
+
+  @Get('/nombre/:nombre')
+  async buscarPlatoPorNombre(@Param('nombre') nombre: string) {
+    return this.gestionPlatosService.buscarPlatoPorNombre(nombre);
+  }
+
+  @Get('/categoria/:categoria')
+  async buscarPlatosPorCategoria(@Param('categoria') categoria: string) {
+    return this.gestionPlatosService.buscarPlatosPorCategoria(categoria);
+  }
+
+  @Get('/disponibles')
+  async buscarPlatosDisponibles() {
+    return this.gestionPlatosService.buscarPlatosDisponibles();
+  }
 }

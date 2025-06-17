@@ -18,6 +18,18 @@ export class Plato {
   @Column({ default: true })
   disponible: boolean;
 
+  @Column({ default: false })
+  esVegano: boolean;
+
+  @Column({ default: false })
+  tieneGluten: boolean;
+
+  @Column({ default: false })
+  esVegetariano: boolean;
+
+  @Column({ default: false })
+  tieneLactosa: boolean;
+
   @OneToMany(() => PedidoPlato, pedidoPlato => pedidoPlato.plato)
   pedidoPlatos: PedidoPlato[];
 } 
