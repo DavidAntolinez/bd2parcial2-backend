@@ -16,17 +16,17 @@ export class GestionHistorialPedidosController {
     return this.gestionHistorialPedidosService.actualizarHistorialPedidos(_id,createHistorialPedidosDto);
   }
 
-  @Get("/buscar/cliente/:clienteId")
+  @Get("/cliente/:clienteId") 
   async buscarHistorialPedidosPorClienteId(@Param('clienteId') clienteId: number) {
     return this.gestionHistorialPedidosService.buscarHistorialPedidosPorClienteId(clienteId);
   }
 
-  @Get("/buscar/fecha/:fechaInicio/:fechaFin")
-  async buscarHistorialPedidosPorFecha(@Param('fechaInicio') fechaInicio: Date,@Param('fechaFin') fechaFin: Date) {
-    return this.gestionHistorialPedidosService.buscarHistorialPedidosPorFecha(fechaInicio, fechaFin);
+  @Get("/fecha/:fecha")
+  async buscarHistorialPedidosPorFecha(@Param('fecha') fecha: Date) {
+    return this.gestionHistorialPedidosService.buscarHistorialPedidosPorFecha(fecha);
   }
 
-  @Get("/buscar/plato/:platoId")
+  @Get("/plato/:platoId")
   async buscarHistorialPedidosPorPlatoId(@Param('platoId') platoId: number) {
     return this.gestionHistorialPedidosService.buscarHistorialPedidosPorPlatoId(platoId);
   }

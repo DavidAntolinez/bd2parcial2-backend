@@ -17,7 +17,7 @@ export class GestionPlatosController {
     return this.gestionPlatosService.crearPlato(plato);
   }
 
-  @Put(':id')
+  @Put('/:id')
   async actualizarPlato(@Param('id') id: number, @Body() plato: CreatePlatoDto) {
     return this.gestionPlatosService.actualizarPlato(id, plato);
   }

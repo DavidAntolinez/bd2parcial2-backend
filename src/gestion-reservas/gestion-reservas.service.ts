@@ -1,14 +1,12 @@
 import { BadRequestException, ImATeapotException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ReservasService } from 'src/dataBaseSql/reservas/reservas.service';
 import { CreateReservaDto } from 'src/dataBaseSql/reservas/dto/create-reserva.dto';
-import { MesasService } from 'src/dataBaseSql/mesas/mesas.service';
 import { Reserva } from 'src/dataBaseSql/reservas/entities/reserva.entity';
 
 @Injectable()
 export class GestionReservasService {
     constructor(
-        private readonly reservasService: ReservasService,
-        private readonly mesasService: MesasService
+        private readonly reservasService: ReservasService
     ) { }
 
     async obtenerReservas() {
@@ -66,20 +64,12 @@ export class GestionReservasService {
         return this.encontrarInterseccionTresArrays(reservasFecha, reservasMesa, reservasHora);
     }
 
-    // /**
-    //  * Método alternativo más eficiente usando Set para intersección
-    //  * @param array1 Primer array de reservas
-    //  * @param array2 Segundo array de reservas
-    //  * @param array3 Tercer array de reservas
-    //  * @returns Array con elementos que están en los 3 arrays
-    //  */
-    // encontrarInterseccionConSet(array1: Reserva[], array2: Reserva[], array3: Reserva[]): Reserva[] {
-    //     const ids1 = new Set(array1.map(r => r.id));
-    //     const ids2 = new Set(array2.map(r => r.id));
-        
-    //     return array3.filter(reserva => 
-    //         ids1.has(reserva.id) && ids2.has(reserva.id)
-    //     );
-    // }
+    async buscarReservasPorClienteId(clienteId: number) {
+        return this.reservasService.findByCliente(clienteId);
+    }
 
+    async buscarReservasPorFecha(fecha: Date) {
+        return this.reservasService.findByFecha(fecha);
+    }
+    
 }

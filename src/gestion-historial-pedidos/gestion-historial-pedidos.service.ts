@@ -20,8 +20,8 @@ export class GestionHistorialPedidosService {
         return this.historialPedidosService.findByClienteId(clienteId);
     }
 
-    async buscarHistorialPedidosPorFecha(fechaInicio: Date, fechaFin: Date) {
-        return this.historialPedidosService.findByFechaRange(fechaInicio, fechaFin);
+    async buscarHistorialPedidosPorFecha(fecha: Date) {
+        return this.historialPedidosService.findByFecha(fecha);
     }
 
     async buscarHistorialPedidosPorPlatoId(platoId: number) {

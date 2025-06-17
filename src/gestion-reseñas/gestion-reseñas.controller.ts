@@ -16,17 +16,17 @@ export class GestionReseñasController {
     return this.gestionReseñasService.obtenerReseñas();
   }
 
-  @Get('estrellas/:estrellas')
+  @Get('/estrellas/:estrellas')
   async obtenerReseñasPorEstrellas(@Param('estrellas') estrellas: number) {
     return this.gestionReseñasService.obtenerReseñaPorEstrellas(estrellas);
   }
 
-  @Get('tipo-visita/:tipoVisita')
+  @Get('/tipo-visita/:tipoVisita')
   async obtenerReseñasPorTipoVisita(@Param('tipoVisita') tipoVisita: string) {
     return this.gestionReseñasService.obtenerReseñaPorTipoVisita(tipoVisita);
   }
 
-  @Get('plato/:nombrePlato')
+  @Get('/plato/:nombrePlato')
   async obtenerReseñasPorNombrePlato(@Param('nombrePlato') nombrePlato: string) {
     return this.gestionReseñasService.obtenerReseñaPorNombrePlato(nombrePlato);
   }

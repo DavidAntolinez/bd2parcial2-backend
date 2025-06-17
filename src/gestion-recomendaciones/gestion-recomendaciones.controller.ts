@@ -5,12 +5,12 @@ import { GestionRecomendacionesService } from './gestion-recomendaciones.service
 export class GestionRecomendacionesController {
   constructor(private readonly gestionRecomendacionesService: GestionRecomendacionesService) {}
 
-  @Post('/cliente/:clienteId')
+  @Post('/crear/:clienteId')
   async crearRecomendaciones(@Param('clienteId') clienteId: number) {
     return this.gestionRecomendacionesService.crearRecomendaciones(clienteId);
   }
 
-  @Get('/cliente/:clienteId')
+  @Get('/obtener/:clienteId')
   async obtenerRecomendaciones(@Param('clienteId') clienteId: number) {
     return this.gestionRecomendacionesService.obtenerRecomendaciones(clienteId);
   }

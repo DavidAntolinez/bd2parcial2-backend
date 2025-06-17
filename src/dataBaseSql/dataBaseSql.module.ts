@@ -12,14 +12,14 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       // Usar connection pooler (puerto 6543) en lugar de conexión directa
-      // url: `postgresql://postgres:${process.env.SUPABASE_PASSWORD}@db.mezzxooeleitftmbjltx.supabase.co:6543/postgres?pgbouncer=true`,
-      host: process.env.MARIADB_HOST,
-      port: parseInt(process.env.MARIADB_PORT || '3306'),
-      username: process.env.MARIADB_USERNAME,
-      password: process.env.MARIADB_PASSWORD,
-      database: process.env.MARIADB_DATABASE,
+      url: `postgresql://postgres:${process.env.SUPABASE_PASSWORD}@db.mezzxooeleitftmbjltx.supabase.co:6543/postgres?pgbouncer=true`,
+      // host: process.env.MARIADB_HOST,
+      // port: parseInt(process.env.MARIADB_PORT || '3306'),
+      // username: process.env.MARIADB_USERNAME,
+      // password: process.env.MARIADB_PASSWORD,
+      // database: process.env.MARIADB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       // synchronize: process.env.NODE_ENV !== 'production',
       ssl: {

@@ -125,12 +125,12 @@ export class HistorialPedidosService {
     return await this.historialPedidosModel.find({ clienteId }).sort({ fecha: -1 }).exec();
   }
 
-  async findByFechaRange(fechaInicio: Date, fechaFin: Date): Promise<HistorialPedidos[]> {
+  async findByFecha(fecha: Date): Promise<HistorialPedidos[]> {
     return await this.historialPedidosModel
       .find({ 
         fecha: { 
-          $gte: fechaInicio, 
-          $lte: fechaFin 
+          $gte: fecha, 
+          $lte: fecha 
         } 
       })
       .sort({ fecha: -1 })

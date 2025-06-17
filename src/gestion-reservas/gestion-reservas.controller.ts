@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { GestionReservasService } from './gestion-reservas.service';
 import { CreateReservaDto } from 'src/dataBaseSql/reservas/dto/create-reserva.dto';
 
@@ -14,5 +14,15 @@ export class GestionReservasController {
   @Post()
   async crearReserva(@Body() reserva: CreateReservaDto) {
     return this.gestionReservasService.crearReserva(reserva);
+  }
+
+  @Get("/buscar/cliente/:clienteId")
+  async buscarReservasPorClienteId(@Param('clienteId') clienteId: number) {
+    return this.gestionReservasService.buscarReservasPorClienteId(clienteId);
+  }
+
+  @Get("/buscar/fecha/:fecha")
+  async buscarReservasPorFecha(@Param('fecha') fecha: Date) {
+    return this.gestionReservasService.buscarReservasPorFecha(fecha);
   }
 }
