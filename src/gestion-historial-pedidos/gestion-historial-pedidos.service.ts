@@ -8,6 +8,11 @@ export class GestionHistorialPedidosService {
         private readonly historialPedidosService: HistorialPedidosService,
     ) {}
 
+
+    async obtenerHistorialPedidos() {
+        return this.historialPedidosService.findAll();
+    }
+
     async crearHistorialPedidos(createHistorialPedidosDto: CreateHistorialPedidosDto) {
         return this.historialPedidosService.create(createHistorialPedidosDto);
     }

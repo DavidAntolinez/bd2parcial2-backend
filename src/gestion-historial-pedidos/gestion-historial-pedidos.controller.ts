@@ -6,6 +6,11 @@ import { CreateHistorialPedidosDto } from 'src/dataBaseNoSql/historial-pedidos/d
 export class GestionHistorialPedidosController {
   constructor(private readonly gestionHistorialPedidosService: GestionHistorialPedidosService) {}
 
+  @Get()
+  async obtenerHistorialPedidos() {
+    return this.gestionHistorialPedidosService.obtenerHistorialPedidos();
+  }
+
   @Post("/crear")
   async crearHistorialPedidos(@Body() createHistorialPedidosDto: CreateHistorialPedidosDto) {
     return this.gestionHistorialPedidosService.crearHistorialPedidos(createHistorialPedidosDto);

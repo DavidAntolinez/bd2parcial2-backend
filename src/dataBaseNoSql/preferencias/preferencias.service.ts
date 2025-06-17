@@ -20,7 +20,54 @@ export class PreferenciasService {
 
     const preferenciaExistente = await this.preferenciasModel.findOne({ clienteId: createPreferenciasDto.clienteId }).exec();
     if (preferenciaExistente) {
-      throw new BadRequestException('Ya existe una preferencia para este cliente');
+      // Algoritmo para combinar la información nueva con la existente
+      
+      // Combinar intolerancias (sin duplicados)
+      const intoleranciasCombinadas = [
+        ...new Set([
+          ...(preferenciaExistente.intolerancias || []),
+          ...(createPreferenciasDto.intolerancias || [])
+        ])
+      ];
+      
+      // Combinar preferencias (sin duplicados)
+      const preferenciasCombinadas = [
+        ...new Set([
+          ...(preferenciaExistente.preferencias || []),
+          ...(createPreferenciasDto.preferencias || [])
+        ])
+      ];
+      
+      // Combinar platos favoritos (sin duplicados por platoId)
+      const platosExistentes = preferenciaExistente.platosFavoritos || [];
+      const platosNuevos = createPreferenciasDto.platosFavoritos || [];
+      
+      const platosFavoritosCombinados = [...platosExistentes];
+      
+      // Agregar solo los platos nuevos que no existan ya
+      platosNuevos.forEach(platoNuevo => {
+        const yaExiste = platosExistentes.some(platoExistente => platoExistente.platoId === platoNuevo.platoId);
+        if (!yaExiste) {
+          platosFavoritosCombinados.push(platoNuevo);
+        }
+      });
+      
+      // Actualizar la preferencia existente con los datos combinados
+      const preferenciaActualizada = await this.preferenciasModel.findOneAndUpdate(
+        { clienteId: createPreferenciasDto.clienteId },
+        {
+          intolerancias: intoleranciasCombinadas,
+          preferencias: preferenciasCombinadas,
+          platosFavoritos: platosFavoritosCombinados
+        },
+        { new: true }
+      ).exec();
+      
+      if (!preferenciaActualizada) {
+        throw new NotFoundException(`No se pudo actualizar la preferencia para el cliente ${createPreferenciasDto.clienteId}`);
+      }
+      
+      return preferenciaActualizada;
     }
 
     // Verificar que el cliente existe

@@ -18,11 +18,6 @@ export class HistorialPedidosService {
 
   async create(createHistorialPedidosDto: CreateHistorialPedidosDto): Promise<HistorialPedidos> {
 
-    const historialExistente = await this.historialPedidosModel.findOne({ clienteId: createHistorialPedidosDto.clienteId }).exec();
-    if (historialExistente) {
-      throw new BadRequestException('Ya existe un historial de pedidos para este cliente');
-    }
-
     // Verificar que el cliente existe
     const cliente = await this.clientesService.findOne(createHistorialPedidosDto.clienteId);
     if (!cliente) {
